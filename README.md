@@ -1,2 +1,2 @@
-# DTNet.github.io
+# [DTNet](https://maesarblx.github.io/DTNet/)
 Website for DTNet 3D Engine.
