@@ -1,0 +1,291 @@
+<!-- DTNet - Single File Landing Page -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DTNet — Real-time 3D Engine</title>
+  <meta name="description" content="DTNet — fast, extensible 3D engine for games, simulations and realtime visuals." />
+  <style>
+    /* ---------- Reset & base ---------- */
+    :root{
+      --purple-1:#7B3FE4; /* C#-like purple */
+      --purple-2:#512BD4;
+      --bg:#f8fafb;
+      --muted:#6b7280;
+      --card:#ffffff;
+      --glass: rgba(255,255,255,0.7);
+      --radius:14px;
+      --maxw:1100px;
+      --container-padding:20px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    html,body,#app{height:100%}
+    body{margin:0;background:var(--bg);color:#0f172a;-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}
+
+    /* ---------- Layout ---------- */
+    .wrap{max-width:var(--maxw);margin:0 auto;padding:36px var(--container-padding)}
+    header{position:sticky;top:0;background:linear-gradient(180deg,rgba(255,255,255,0.75),rgba(255,255,255,0.6));backdrop-filter:blur(6px);border-bottom:1px solid rgba(15,23,42,0.04);}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px var(--container-padding)}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand h1{font-size:18px;margin:0}
+
+    /* ---------- Logo (inline svg uses currentColor for text only) ---------- */
+    .logo{width:46px;height:46px;display:block}
+
+    /* ---------- Nav links ---------- */
+    nav ul{display:flex;gap:18px;align-items:center;margin:0;padding:0;list-style:none}
+    nav a{font-size:14px;color:var(--muted)}
+    .cta{background:linear-gradient(90deg,var(--purple-1),var(--purple-2));color:white;padding:8px 14px;border-radius:10px;font-weight:600}
+
+    /* mobile */
+    .mobile-toggle{display:none;border:0;background:transparent;font-size:20px}
+
+    /* ---------- Hero ---------- */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:36px;align-items:center;padding:48px 0}
+    .kicker{display:inline-block;background:rgba(123,63,228,0.12);color:var(--purple-2);padding:6px 10px;border-radius:999px;font-weight:700;font-size:12px}
+    h2{font-size:42px;margin:12px 0 8px;line-height:1.02}
+    p.lead{color:var(--muted);max-width:56ch}
+    .actions{margin-top:20px;display:flex;gap:12px;flex-wrap:wrap}
+
+    /* preview card */
+    .preview{background:linear-gradient(180deg,rgba(123,63,228,0.05),transparent);border-radius:18px;padding:18px;border:1px solid rgba(15,23,42,0.04)}
+    .screen{height:320px;border-radius:12px;background:linear-gradient(135deg,rgba(123,63,228,0.08),rgba(81,43,212,0.02));display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:600}
+    .chips{display:flex;gap:10px;margin-top:12px}
+    .chip{background:var(--card);border-radius:10px;padding:8px 10px;border:1px solid rgba(15,23,42,0.04);font-size:13px}
+
+    /* ---------- Features ---------- */
+    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:36px}
+    .card{background:var(--card);padding:18px;border-radius:16px;border:1px solid rgba(15,23,42,0.04)}
+    .card h3{margin:0 0 8px}
+    .card p{margin:0;color:var(--muted);font-size:14px}
+
+    /* ---------- Docs / code block ---------- */
+    .docs{display:grid;grid-template-columns:1fr 320px;gap:18px;margin-top:36px}
+    pre{background:#0f172a;color:#e6eef8;padding:16px;border-radius:12px;overflow:auto;font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Segoe UI Mono", monospace;font-size:13px}
+    .aside{background:var(--card);padding:16px;border-radius:12px;border:1px solid rgba(15,23,42,0.04)}
+    .copy-btn{background:transparent;border:1px solid rgba(255,255,255,0.08);color:inherit;padding:6px 8px;border-radius:8px;cursor:pointer}
+
+    /* ---------- Download / community ---------- */
+    .download{margin-top:28px;background:linear-gradient(180deg,rgba(123,63,228,0.04),transparent);padding:18px;border-radius:14px;border:1px solid rgba(15,23,42,0.04)}
+    .d-grid{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:12px}
+    .d-grid a{padding:10px 14px;border-radius:10px;border:1px solid rgba(15,23,42,0.06);background:var(--card)}
+
+    /* ---------- Footer ---------- */
+    footer{margin-top:48px;padding:28px 0;border-top:1px solid rgba(15,23,42,0.04)}
+    .foot-inner{display:flex;align-items:center;justify-content:space-between;gap:12px}
+
+    /* ---------- Responsiveness ---------- */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr}
+      nav ul{display:none}
+      .mobile-toggle{display:block}
+      .features{grid-template-columns:repeat(2,1fr)}
+      .docs{grid-template-columns:1fr}
+    }
+    @media (max-width:560px){
+      .features{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <header>
+      <div class="nav wrap">
+        <div class="brand">
+          <svg class="logo" width="36" height="36" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+              <defs>
+                <linearGradient id="lg2" x1="0" x2="1" y1="0" y2="1">
+                  <stop offset="0" stop-color="var(--purple-1)"/>
+                  <stop offset="1" stop-color="var(--purple-2)"/>
+                </linearGradient>
+              </defs>
+              <path d="M32 6 L54 52 L10 52 Z" fill="url(#lg2)" />
+            </svg>
+          <div>
+            <h1 style="margin:0">DTNet</h1>
+            <div style="font-size:12px;color:var(--muted);">Realtime 3D engine</div>
+          </div>
+        </div>
+
+        <nav>
+          <ul>
+            <!-- <li><a href="#features">Features</a></li>
+            <li><a href="#docs">Docs</a></li>
+            <li><a href="#download">Download</a></li>
+            <li><a href="#community">Community</a></li> -->
+          </ul>
+        </nav>
+
+        <div style="display:flex;gap:10px;align-items:center">
+          <a class="cta" href="#download">Get Engine</a>
+          <button class="mobile-toggle" id="menuToggle" aria-label="Menu">☰</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="hero">
+        <div>
+          <div class="kicker">v0.1a</div>
+          <h2>Build fast, reliable real-time 3D with <span style="background:linear-gradient(90deg,var(--purple-1),var(--purple-2));-webkit-background-clip:text;background-clip:text;color:transparent">DTNet</span></h2>
+          <p class="lead">A modern 3D engine focused on predictable rendering, deterministic physics, and easy networking. Ship games, simulations, and interactive experiences with a small, consistent API.</p>
+
+          <div class="actions">
+            <a class="cta" href="#download">Download</a>
+            <!-- <a href="#docs" style="padding:10px 14px;border-radius:10px;border:1px solid rgba(15,23,42,0.04);background:var(--card)">Read the Docs</a>
+            <a href="#community" style="padding:10px 14px;border-radius:10px;border:1px solid rgba(15,23,42,0.04);background:var(--card)">Join Community</a> -->
+          </div>
+
+          <!-- <div class="chips" aria-hidden="true" style="margin-top:18px">
+            <div class="chip">PBR &amp; Deferred</div>
+            <div class="chip">Deterministic Physics</div>
+            <div class="chip">WASM Export</div>
+          </div> -->
+        </div>
+
+        <!-- <aside>
+          <div class="preview">
+            <div class="screen" id="previewScreen">Interactive 3D Preview
+            </div>
+            <div class="chips" style="margin-top:12px">
+              <div class="chip">Realtime GI</div>
+              <div class="chip">GPU Particles</div>
+              <div class="chip">Net Sync</div>
+            </div>
+          </div>
+        </aside> -->
+      </section>
+
+      <section id="features" aria-label="Features">
+        <h3 style="margin:8px 0 12px">Features</h3>
+        <div class="features">
+          <!-- <div class="card"><h3>PBR Renderer</h3><p>Physically-based, HDR lighting with post-processing pipeline.</p></div> -->
+          <div class="card"><h3>Bepu Physics</h3><p>Authoritative simulation with rollback-friendly state and replay.</p></div>
+          <div class="card"><h3>Net Sync</h3><p>Low-latency scene replication and state interpolation tools.</p></div>
+          <!-- <div class="card"><h3>Extensible Shaders</h3><p>Support custom GLSL/HLSL modules and node materials.</p></div> -->
+          <!-- <div class="card"><h3>Tooling & Editor</h3><p>Editor integrations, asset pipeline and hot-reload support.</p></div> -->
+          <!-- <div class="card"><h3>WASM Export</h3><p>Publish to the web with near-native performance and minimal packaging.</p></div> -->
+        </div>
+      </section>
+
+      <!-- <section id="docs" class="docs">
+        <div>
+          <h3 style="margin:0 0 10px">Quick start</h3>
+          <p style="color:var(--muted);margin:0 0 12px">Install the runtime or use the WASM demo. The API is intentionally small so prototypes move fast.</p>
+
+          <pre id="codeBlock">// Minimal pseudo-example
+using DTNet;
+
+var app = new EngineApp();
+var scene = app.CreateScene();
+var cam = scene.AddCamera((0,2,5));
+var cube = scene.AddMesh("cube");
+app.Run();
+</pre>
+          <div style="margin-top:8px;display:flex;gap:8px;align-items:center">
+            <button class="copy-btn" id="copyCode">Copy</button>
+            <a href="#" style="font-size:13px;color:var(--muted)">Full API reference →</a>
+          </div>
+        </div>
+
+        <aside class="aside">
+          <h4 style="margin:0 0 8px">Docs</h4>
+          <ul style="padding-left:18px;margin:0;color:var(--muted)">
+            <li><a href="#">Getting started</a></li>
+            <li><a href="#">Tutorials</a></li>
+            <li><a href="#">Editor guide</a></li>
+          </ul>
+        </aside>
+      </section> -->
+
+      <section id="download" class="download">
+        <h3 style="margin:0">Get DTNet</h3>
+        <p style="color:var(--muted);margin:6px 0 12px">Current available builds:</p>
+        <div class="d-grid">
+          <a href="https://github.com/maesarblx-ux/DTNet/releases/tag/ALPHA">Windows</a>
+          <!-- <a href="#">Linux (AppImage)</a>
+          <a href="#">WASM Demo</a> -->
+        </div>
+        <!-- <div style="margin-top:10px;color:var(--muted);font-size:13px">CLI: <code>edtnet init</code> — scaffolds a new project</div> -->
+      </section>
+
+      <section id="community" style="margin-top:22px">
+        <h3 style="margin:0 0 8px">Community & Support</h3>
+        <p style="color:var(--muted);margin:0 0 12px">Report issues on GitHub or join the Discord.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <a href="https://github.com/maesarblx-ux/DTNet">GitHub</a>
+          <a href="#">Discord</a>
+          <!-- <a href="#">Forum</a> -->
+        </div>
+      </section>
+
+      <footer>
+        <div class="wrap foot-inner">
+          <div style="display:flex;gap:12px;align-items:center">
+            <svg width="36" height="36" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+              <defs>
+                <linearGradient id="lg2" x1="0" x2="1" y1="0" y2="1">
+                  <stop offset="0" stop-color="var(--purple-1)"/>
+                  <stop offset="1" stop-color="var(--purple-2)"/>
+                </linearGradient>
+              </defs>
+              <path d="M32 6 L54 52 L10 52 Z" fill="url(#lg2)" />
+            </svg>
+            <div>
+              <div style="font-weight:700">DTNet</div>
+              <div style="font-size:12px;color:var(--muted)">© <span id="year"></span> DTNet — MIT</div>
+            </div>
+          </div>
+          <div style="color:var(--muted);font-size:14px">Made with ♥ for realtime-3D developers</div>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // small JS for interactivity: mobile toggle, copy code, year
+    (function(){
+      const menuToggle = document.getElementById('menuToggle');
+      const nav = document.querySelector('nav ul');
+      if(menuToggle){
+        menuToggle.addEventListener('click', ()=>{
+          if(nav.style.display === 'flex') nav.style.display = 'none';
+          else nav.style.display = 'flex';
+        });
+      }
+
+      const copyBtn = document.getElementById('copyCode');
+      const code = document.getElementById('codeBlock');
+      if(copyBtn){
+        copyBtn.addEventListener('click', async ()=>{
+          try{
+            await navigator.clipboard.writeText(code.innerText);
+            copyBtn.innerText = 'Copied ✓';
+            setTimeout(()=>copyBtn.innerText = 'Copy',1400);
+          }catch(e){
+            copyBtn.innerText = 'No clipboard';
+            setTimeout(()=>copyBtn.innerText = 'Copy',1400);
+          }
+        });
+      }
+
+      // placeholder 3D preview animation (pure CSS/DOM shimmer)
+      const preview = document.getElementById('previewScreen');
+      if(preview){
+        let dots = 0;
+        setInterval(()=>{
+          dots = (dots + 1) % 4;
+          preview.innerText = 'Interactive 3D Preview' + '.'.repeat(dots);
+        },600);
+      }
+
+      // year
+      const y = new Date().getFullYear();
+      document.getElementById('year').innerText = y;
+    })();
+  </script>
+</body>
+</html>
